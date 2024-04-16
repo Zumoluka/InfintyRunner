@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundSpawner : MonoBehaviour
 {
     [SerializeField] GameObject groundTile;
+    
     Vector3 nextSpawnPoint;
 
     public void SpawnTile(bool spawnItems)
@@ -16,6 +18,7 @@ public class GroundSpawner : MonoBehaviour
         {
             temp.GetComponent<GroundTile>().SpawnObstacle();
             temp.GetComponent<GroundTile>().SpawnCoins();
+            temp.GetComponent<GroundTile>().SpawnPowerUp();
         }
     }
 
@@ -33,4 +36,6 @@ public class GroundSpawner : MonoBehaviour
             }
         }
     }
+  
+
 }

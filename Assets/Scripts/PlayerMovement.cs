@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     bool alive = true;
+    private bool isInvincible = false;
     public float speed = 5;
     [SerializeField] Rigidbody rb;
     float horizontalInput;
@@ -29,17 +30,48 @@ public class PlayerMovement : MonoBehaviour
         {
             Die();
         }
+        if(!isInvincible) 
+        {
+            float horizontalInmput = Input.GetAxis("Horizontal");
+            Vector3 movement = new Vector3 (horizontalInput, 0, speed) * Time.deltaTime;
+            rb.MovePosition(transform.position + movement);
+        }
     }
 
     public void Die()
     {
         alive = false;
-        // Restart the game
+
         Invoke("Restart", 1);
     }
 
     void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("SampleScene");
     }
+    public void ActivateInvincibility(float duration)
+    {
+        isInvincible = true;
+
+        Invoke("DeactivateInvincibility", duration);
+    }
+
+    private void DeactivateInvincibility()
+    {
+        isInvincible = false;
+    }
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+    public void ActivateInvencibility(float duration)
+    {
+        isInvincible=true;
+        Invoke("DeactivateInvencibility", duration);
+    }
+    public void DeactivateInvencibility()
+    {
+        isInvincible = false;
+    }
+
 }
